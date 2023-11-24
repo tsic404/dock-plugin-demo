@@ -5,6 +5,8 @@ import QtQuick
 import QtQuick.Controls
 import QtWayland.Compositor
 import QtWayland.Compositor.IviApplication
+import QtWayland.Compositor.XdgShell
+import org.deepin.dde.dock
 
 Window {
     id: root
@@ -20,11 +22,17 @@ Window {
                 window: surfaceHandler.window
             }
 
+
             IviApplication {
-                onIviSurfaceCreated: (iviSurface) => surfaceHandler.handleShellSurface(iviSurface)
+                onIviSurfaceCreated: (iviSurface) => {
+                    console.log(iviSurface.surface.client)
+                }
             }
-            onSurfaceCreated: surface => {
-                console.log(surface)
+
+            DockPluginShell {
+                onDockPluginSurfaceCreated: (dockPluginSurface) => {
+                    console.log(dockPluginSurface.surface)
+                }
             }
         }
 
